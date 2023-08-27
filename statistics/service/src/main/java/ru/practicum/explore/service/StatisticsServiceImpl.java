@@ -31,7 +31,6 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Transactional(readOnly = true)
     public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, String[] uris, boolean unique) {
         List<ViewStats> stats;
-        System.out.println("method hit");
         if (uris.length == 0 && !unique) {
             stats = repository.findViewStats(start, end);
         } else if (uris.length == 0) {
@@ -41,8 +40,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         } else {
             stats = repository.findViewStatsByUrisUniqueIps(start, end, uris);
         }
-        System.out.println("got response: " + stats);
-
         return ViewStatsDtoMapper.toDto(stats);
     }
 }
