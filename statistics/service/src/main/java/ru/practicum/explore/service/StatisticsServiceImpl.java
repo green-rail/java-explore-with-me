@@ -2,6 +2,7 @@ package ru.practicum.explore.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explore.common.dto.EndpointHitDto;
 import ru.practicum.explore.common.dto.ViewStatsDto;
 import ru.practicum.explore.model.EndpointDtoMapper;
@@ -12,8 +13,6 @@ import ru.practicum.explore.storage.StatisticsRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

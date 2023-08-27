@@ -1,12 +1,12 @@
 package ru.practicum.explore.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.practicum.explore.common.Constants;
 
 import java.time.LocalDateTime;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import ru.practicum.explore.common.Constants;
 
 @Data
 @NoArgsConstructor
