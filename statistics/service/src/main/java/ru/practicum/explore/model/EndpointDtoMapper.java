@@ -1,11 +1,7 @@
 package ru.practicum.explore.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.experimental.UtilityClass;
-import ru.practicum.explore.dto.EndpointHitDto;
-
-import javax.persistence.Column;
-import java.time.LocalDateTime;
+import ru.practicum.explore.common.dto.EndpointHitDto;
 
 @UtilityClass
 public class EndpointDtoMapper {

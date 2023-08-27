@@ -1,4 +1,4 @@
-package ru.practicum.explore.dto;
+package ru.practicum.explore.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import ru.practicum.explore.common.Constants;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +17,6 @@ public class EndpointHitDto {
     private String uri;
     private String ip;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = Constants.HIT_DATETIME_FORMAT)
     private LocalDateTime timestamp;
 }

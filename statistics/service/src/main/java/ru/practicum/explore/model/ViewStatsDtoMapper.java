@@ -1,7 +1,7 @@
 package ru.practicum.explore.model;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.explore.dto.ViewStatsDto;
+import ru.practicum.explore.common.dto.ViewStatsDto;
 
 import java.util.Collection;
 import java.util.List;

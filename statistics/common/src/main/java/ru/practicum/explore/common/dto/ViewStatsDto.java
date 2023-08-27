@@ -1,4 +1,4 @@
-package ru.practicum.explore.dto;
+package ru.practicum.explore.common.dto;
 
 import lombok.Value;
 

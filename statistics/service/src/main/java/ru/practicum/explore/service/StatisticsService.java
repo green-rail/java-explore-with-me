@@ -1,7 +1,7 @@
 package ru.practicum.explore.service;
 
-import ru.practicum.explore.dto.EndpointHitDto;
-import ru.practicum.explore.dto.ViewStatsDto;
+import ru.practicum.explore.common.dto.EndpointHitDto;
+import ru.practicum.explore.common.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
 import java.util.List;

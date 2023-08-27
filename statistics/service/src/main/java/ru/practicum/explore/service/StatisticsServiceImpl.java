@@ -2,8 +2,8 @@ package ru.practicum.explore.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.explore.dto.EndpointHitDto;
-import ru.practicum.explore.dto.ViewStatsDto;
+import ru.practicum.explore.common.dto.EndpointHitDto;
+import ru.practicum.explore.common.dto.ViewStatsDto;
 import ru.practicum.explore.model.EndpointDtoMapper;
 import ru.practicum.explore.model.EndpointHit;
 import ru.practicum.explore.model.ViewStats;

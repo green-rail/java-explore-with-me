@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.explore.dto.EndpointHitDto;
-import ru.practicum.explore.dto.ViewStatsDto;
+import ru.practicum.explore.common.dto.EndpointHitDto;
+import ru.practicum.explore.common.dto.ViewStatsDto;
 import ru.practicum.explore.service.StatisticsService;
 
 import javax.servlet.http.HttpServletRequest;
