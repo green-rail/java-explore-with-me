@@ -62,10 +62,7 @@ public final class StatClient {
     }
 
     private static boolean isValidStartEnd(LocalDateTime start, LocalDateTime end) {
-        if (start.isAfter(LocalDateTime.now())) {
-            return false;
-        }
-        return start.isBefore(end);
+        return start.isBefore(LocalDateTime.now()) && start.isBefore(end);
     }
 
 

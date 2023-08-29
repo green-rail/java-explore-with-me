@@ -29,11 +29,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, String[] uris, boolean unique) {
+    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
         List<ViewStats> stats;
-        if (uris.length == 0 && !unique) {
+        if (uris.isEmpty() && !unique) {
             stats = repository.findViewStats(start, end);
-        } else if (uris.length == 0) {
+        } else if (uris.isEmpty()) {
             stats = repository.findViewStatsUniqueIps(start, end);
         } else if (!unique) {
             stats = repository.findViewStatsByUris(start, end, uris);

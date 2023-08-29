@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.explore.common.Constants;
 import ru.practicum.explore.common.dto.EndpointHitDto;
 import ru.practicum.explore.common.dto.ViewStatsDto;
 import ru.practicum.explore.service.StatisticsService;
@@ -20,21 +21,19 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @PostMapping("/hit")
-    public EndpointHitDto saveHit(@RequestBody @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") EndpointHitDto hitDto,
+    public EndpointHitDto saveHit(@RequestBody EndpointHitDto hitDto,
                                   HttpServletRequest request) {
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
         return statisticsService.addHit(hitDto);
     }
 
     @GetMapping("/stats")
-    public List<ViewStatsDto> getStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                       @RequestParam(required = false) String[] uris,
+    public List<ViewStatsDto> getStats(@RequestParam @DateTimeFormat(pattern = Constants.HIT_DATETIME_FORMAT) LocalDateTime start,
+                                       @RequestParam @DateTimeFormat(pattern = Constants.HIT_DATETIME_FORMAT) LocalDateTime end,
+                                       @RequestParam(defaultValue = "") List<String> uris,
                                        @RequestParam(defaultValue = "false") boolean unique,
                                        HttpServletRequest request) {
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
-        return statisticsService.getStats(start, end,
-                uris == null ? new String[]{} : uris,
-                unique);
+        return statisticsService.getStats(start, end, uris, unique);
     }
 }
