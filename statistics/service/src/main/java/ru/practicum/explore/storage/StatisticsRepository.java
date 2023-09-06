@@ -47,9 +47,7 @@ public interface StatisticsRepository extends JpaRepository<EndpointHit, Long> {
             "GROUP BY e.app, e.uri " +
             "ORDER BY COUNT(DISTINCT e.ip) DESC")
     List<ViewStats> findViewStatsByUrisUniqueIps(@Param("start") LocalDateTime start,
-                                        @Param("end") LocalDateTime end,
-                                        @Param("uris") List<String> uris);
-
-
+                                                 @Param("end") LocalDateTime end,
+                                                 @Param("uris") List<String> uris);
 
 }
