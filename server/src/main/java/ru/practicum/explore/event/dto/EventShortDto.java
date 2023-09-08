@@ -1,20 +1,18 @@
 package ru.practicum.explore.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import ru.practicum.explore.category.CategoryDto;
+import ru.practicum.explore.category.dto.CategoryDto;
 import ru.practicum.explore.common.Constants;
 import ru.practicum.explore.event.model.Event;
-import ru.practicum.explore.event.model.EventState;
-import ru.practicum.explore.event.model.Location;
 import ru.practicum.explore.user.dto.UserShortDto;
 
 import java.time.LocalDateTime;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class EventShortDto {
 
@@ -38,7 +36,7 @@ public class EventShortDto {
         var dto = new EventShortDto();
         dto.setAnnotation(event.getAnnotation());
         dto.setCategory(CategoryDto.toDto(event.getCategory()));
-        dto.setConfirmedRequests(event.getConfirmedRequests());
+        dto.setConfirmedRequests(event.getRequestCount());
         dto.setEventDate(event.getEventDate());
         dto.setId(event.getId());
         dto.setInitiator(UserShortDto.toDto(event.getInitiator()));

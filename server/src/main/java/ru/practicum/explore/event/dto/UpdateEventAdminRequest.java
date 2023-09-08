@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.explore.category.CategoryDto;
 import ru.practicum.explore.common.Constants;
+import ru.practicum.explore.error.ErrorMessages;
 import ru.practicum.explore.error.exception.InvalidRequestException;
 import ru.practicum.explore.event.model.Location;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,13 +19,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UpdateEventAdminRequest {
 
-    @NotEmpty
+    @Size(min = 20, message = ErrorMessages.STRING_TOO_SHORT_MESSAGE)
+    @Size(max = 2000, message = ErrorMessages.STRING_TOO_LONG_MESSAGE)
     private String annotation;
 
     @Positive
     private Long category;
 
-    @NotEmpty
+    @Size(min = 20, message = ErrorMessages.STRING_TOO_SHORT_MESSAGE)
+    @Size(max = 7000, message = ErrorMessages.STRING_TOO_LONG_MESSAGE)
     private String description;
 
     @JsonFormat(pattern = Constants.DEFAULT_DATETIME_FORMAT)
@@ -40,10 +42,10 @@ public class UpdateEventAdminRequest {
 
     private Boolean requestModeration;
 
-    @NotEmpty
     private String stateAction;
 
-    @NotEmpty
+    @Size(min = 3, message = ErrorMessages.STRING_TOO_SHORT_MESSAGE)
+    @Size(max = 120, message = ErrorMessages.STRING_TOO_LONG_MESSAGE)
     private String title;
 
     public EventStateAction getStateActionOrThrow() throws InvalidRequestException {
@@ -57,7 +59,7 @@ public class UpdateEventAdminRequest {
         }
     }
 
-    public enum EventStateAction{
+    public enum EventStateAction {
         PUBLISH_EVENT,
         REJECT_EVENT
     }

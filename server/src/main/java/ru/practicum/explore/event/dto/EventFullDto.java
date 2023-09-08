@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.explore.category.CategoryDto;
+import ru.practicum.explore.category.dto.CategoryDto;
 import ru.practicum.explore.common.Constants;
 import ru.practicum.explore.event.model.Event;
 import ru.practicum.explore.event.model.EventState;
@@ -66,7 +66,8 @@ public class EventFullDto {
     public static EventFullDto toDto(Event event) {
         var dto = new EventFullDto();
         dto.setAnnotation(event.getAnnotation());
-        dto.setConfirmedRequests(event.getConfirmedRequests());
+        dto.setCategory(CategoryDto.toDto(event.getCategory()));
+        dto.setConfirmedRequests(event.getRequestCount());
         dto.setCreatedOn(event.getCreatedOn());
         dto.setDescription(event.getDescription());
         dto.setEventDate(event.getEventDate());

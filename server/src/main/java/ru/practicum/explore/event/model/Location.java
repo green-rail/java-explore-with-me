@@ -1,12 +1,21 @@
 package ru.practicum.explore.event.model;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class Location {
-    float lat;
-    float lon;
+
+    @Column(name = "lat")
+    private float lat;
+
+    @Column(name = "lon")
+    private float lon;
 }

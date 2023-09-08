@@ -2,8 +2,10 @@ package ru.practicum.explore.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.explore.user.dto.NewUserRequest;
 import ru.practicum.explore.user.dto.UserDto;
 import ru.practicum.explore.user.service.UserService;
 
@@ -32,12 +34,14 @@ public class UserAdminController {
     }
 
     @PostMapping
-    public UserDto addUser(@RequestBody @Valid UserDto userDto, HttpServletRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto addUser(@RequestBody @Valid NewUserRequest userDto, HttpServletRequest request) {
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
         return userService.addUser(userDto);
     }
 
     @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable @Positive long userId, HttpServletRequest request) {
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
         userService.deleteUser(userId);

@@ -18,5 +18,5 @@ public interface EventServicePrivate {
     List<ParticipationRequestDto> getUserEventRequests(long userId, long eventId);
 
     EventRequestStatusUpdateResult updateUserEventRequestStatus(long userId, long eventId,
-                                                                EventRequestStatusUpdateRequest updateRequest);
+                                                                      EventRequestStatusUpdateRequest updateRequest);
 }

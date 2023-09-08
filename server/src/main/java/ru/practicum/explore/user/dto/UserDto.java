@@ -20,11 +20,11 @@ public class UserDto {
     @NotBlank
     private String name;
 
-    public User toEntity() {
-        return new User();
-    }
-
     public static UserDto toDto(User entity) {
-        return new UserDto();
+        var dto = new UserDto();
+        dto.setId(entity.getId());
+        dto.setEmail(entity.getEmail());
+        dto.setName(entity.getName());
+        return dto;
     }
 }

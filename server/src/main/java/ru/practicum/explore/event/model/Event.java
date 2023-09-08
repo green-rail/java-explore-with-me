@@ -3,13 +3,15 @@ package ru.practicum.explore.event.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Formula;
 import ru.practicum.explore.category.Category;
+import ru.practicum.explore.request.model.Request;
 import ru.practicum.explore.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -29,8 +31,9 @@ public class Event {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Formula("(SELECT COUNT(*) FROM request r WHERE r.event_id = id)")
-    private int confirmedRequests;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<Request> requests;
 
     @Column(name = "created_on")
     @CreationTimestamp
@@ -47,6 +50,10 @@ public class Event {
     private User initiator;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "lat", column = @Column(name = "lat")),
+            @AttributeOverride(name = "lon", column = @Column(name = "lon")),
+    })
     private Location location;
 
     @Column
@@ -67,4 +74,12 @@ public class Event {
 
     @Column
     private String title;
+
+
+    public int getRequestCount() {
+        if (getRequests() == null) {
+            return 0;
+        }
+        return requests.size();
+    }
 }

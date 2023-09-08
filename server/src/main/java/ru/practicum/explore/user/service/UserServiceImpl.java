@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.explore.error.exception.DataConflictException;
 import ru.practicum.explore.user.User;
-import ru.practicum.explore.user.dto.UserDto;
 import ru.practicum.explore.user.UserRepository;
+import ru.practicum.explore.user.dto.NewUserRequest;
+import ru.practicum.explore.user.dto.UserDto;
 import ru.practicum.explore.user.exception.UserNotFoundException;
 
 import java.util.List;
@@ -35,8 +37,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto addUser(UserDto userDto) {
-        return UserDto.toDto(userRepository.save(userDto.toEntity()));
+    public UserDto addUser(NewUserRequest userDto) {
+        try {
+            return UserDto.toDto(userRepository.save(userDto.toEntity()));
+        } catch (Exception e) {
+            throw new DataConflictException(e.getMessage());
+        }
     }
 
     @Override

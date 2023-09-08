@@ -15,7 +15,7 @@ public class ApiError {
     private final String status;
     private final String timestamp;
 
-    public ApiError(List<String> errors, String message, String reason, HttpStatus status) {
+    public ApiError(List<String> errors, HttpStatus status, String reason, String message) {
         this.errors = errors;
         this.message = message;
         this.reason = reason;

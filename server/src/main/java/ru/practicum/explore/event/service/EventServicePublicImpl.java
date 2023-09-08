@@ -1,6 +1,7 @@
 package ru.practicum.explore.event.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,21 +16,25 @@ import ru.practicum.explore.event.dto.EventFullDto;
 import ru.practicum.explore.event.dto.EventShortDto;
 import ru.practicum.explore.event.model.Event;
 import ru.practicum.explore.event.model.EventState;
+import ru.practicum.explore.request.RequestRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class EventServicePublicImpl implements EventServicePublic {
 
 
     private final EventRepository eventRepository;
     private final StatClient statisticsClient;
+    private final RequestRepository requestRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -38,7 +43,7 @@ public class EventServicePublicImpl implements EventServicePublic {
                                                boolean onlyAvailable, String sort,
                                                int from, int size) {
         if (searchText.isBlank()) {
-            return Collections.emptyList();
+            searchText = null;
         }
         boolean eventDateSort = false;
         if ("EVENT_DATE".equalsIgnoreCase(sort)) {
@@ -61,15 +66,15 @@ public class EventServicePublicImpl implements EventServicePublic {
         Page<Event> events;
         if (paid == null) {
             if (onlyAvailable) {
-                events = eventRepository.findBySearchOnlyAvailable(searchText, start, end, page);
+                events = eventRepository.findBySearchOnlyAvailable(EventState.PUBLISHED, searchText, start, end, page);
             } else {
-                events = eventRepository.findBySearch(searchText, start, end, page);
+                events = eventRepository.findBySearch(EventState.PUBLISHED, searchText, start, end, page);
             }
         } else {
             if (onlyAvailable) {
-                events = eventRepository.findBySearchAndPaidOnlyAvailable(searchText, paid, start, end, page);
+                events = eventRepository.findBySearchAndPaidOnlyAvailable(EventState.PUBLISHED, searchText, paid, start, end, page);
             } else {
-                events = eventRepository.findBySearchAndPaid(searchText, paid, start, end, page);
+                events = eventRepository.findBySearchAndPaid(EventState.PUBLISHED, searchText, paid, start, end, page);
             }
         }
 
@@ -85,7 +90,7 @@ public class EventServicePublicImpl implements EventServicePublic {
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
 
             List<ViewStatsDto> viewStatsList = (List<ViewStatsDto>) responseEntity.getBody();
-            if ( viewStatsList != null && viewStatsList.size() == eventDtos.size()) {
+            if (viewStatsList != null && viewStatsList.size() == eventDtos.size()) {
                 for (int i = 0; i < viewStatsList.size(); i++) {
                     eventDtos.get(i).setViews(viewStatsList.get(i).getHits());
                 }
@@ -113,8 +118,23 @@ public class EventServicePublicImpl implements EventServicePublic {
     @Override
     @Transactional(readOnly = true)
     public EventFullDto getEventPublic(long id) {
-        var event = eventRepository.findByIdAndStateLike(id, EventState.PUBLISHED.name())
+        var event = eventRepository.findByIdAndState(id, EventState.PUBLISHED)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Event with id=%d was not found", id)));
-        return EventFullDto.toDto(event);
+
+        var dto = EventFullDto.toDto(event);
+        var url = "/events/" + id;
+        var responseEntity = statisticsClient.getStats(LocalDateTime.now().minusYears(100), LocalDateTime.now().plusYears(100),
+                new String[] {url}, true);
+        long hitCount = 0;
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            try {
+                var hitsMap = (ArrayList<Map>)responseEntity.getBody();
+                hitCount = Long.parseLong(String.valueOf(hitsMap.get(0).getOrDefault("hits", "0")));
+            } catch (Exception ignored) {
+                log.warn("Unexpected error while parsing hit count.");
+            }
+        }
+        dto.setViews(hitCount);
+        return dto;
     }
 }

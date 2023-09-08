@@ -1,11 +1,12 @@
 package ru.practicum.explore.category.service;
 
-import ru.practicum.explore.category.CategoryDto;
+import ru.practicum.explore.category.dto.CategoryDto;
+import ru.practicum.explore.category.dto.NewCategoryDto;
 
 import java.util.List;
 
 public interface CategoryService {
-    CategoryDto addCategory(CategoryDto categoryDto);
+    CategoryDto addCategory(NewCategoryDto categoryDto);
 
     void deleteCategory(long id);
 

@@ -3,6 +3,7 @@ package ru.practicum.explore.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.explore.common.Constants;
 import ru.practicum.explore.common.dto.EndpointHitDto;
@@ -21,10 +22,14 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @PostMapping("/hit")
+    @ResponseStatus(HttpStatus.CREATED)
     public EndpointHitDto saveHit(@RequestBody EndpointHitDto hitDto,
                                   HttpServletRequest request) {
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
-        return statisticsService.addHit(hitDto);
+        var result = statisticsService.addHit(hitDto);
+        log.debug("SAVED STAT HIT: " + result);
+
+        return result;
     }
 
     @GetMapping("/stats")
@@ -34,6 +39,8 @@ public class StatisticsController {
                                        @RequestParam(defaultValue = "false") boolean unique,
                                        HttpServletRequest request) {
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
-        return statisticsService.getStats(start, end, uris, unique);
+        var stats = statisticsService.getStats(start, end, uris, unique);
+        log.debug("RETURNING STATISTICS: " + stats);
+        return stats;
     }
 }

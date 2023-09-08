@@ -1,6 +1,5 @@
 package ru.practicum.explore.user.dto;
 
-import lombok.Data;
 import lombok.Value;
 import ru.practicum.explore.user.User;
 
