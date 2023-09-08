@@ -25,11 +25,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto addCategory(NewCategoryDto categoryDto) {
-        try {
-            return CategoryDto.toDto(categoryRepository.save(categoryDto.toEntity()));
-        } catch (Exception e) {
-            throw new DataConflictException(e.getMessage());
+        if (categoryRepository.existsByName(categoryDto.getName())) {
+            throw new DataConflictException("Category with this name already exists");
         }
+        return CategoryDto.toDto(categoryRepository.save(categoryDto.toEntity()));
     }
 
     @Override

@@ -10,6 +10,7 @@ import ru.practicum.explore.compilation.dto.CompilationDto;
 import ru.practicum.explore.compilation.dto.NewCompilationDto;
 import ru.practicum.explore.compilation.dto.UpdateCompilationRequest;
 import ru.practicum.explore.error.ErrorMessages;
+import ru.practicum.explore.error.exception.DataConflictException;
 import ru.practicum.explore.error.exception.EntityNotFoundException;
 import ru.practicum.explore.event.EventRepository;
 import ru.practicum.explore.event.model.Event;
@@ -52,6 +53,9 @@ public class CompilationServiceImpl implements CompilationService {
 
     @Override
     public CompilationDto addCompilationAdmin(NewCompilationDto compilationDto) {
+        if (compilationRepository.existsByTitle(compilationDto.getTitle())) {
+            throw new DataConflictException("Compilation with this name already exists.");
+        }
         var compilation = compilationDto.toEntity();
         if (compilationDto.getEvents() != null && !compilationDto.getEvents().isEmpty()) {
             List<Event> events = eventRepository.findAllById(new HashSet<>(compilationDto.getEvents()));

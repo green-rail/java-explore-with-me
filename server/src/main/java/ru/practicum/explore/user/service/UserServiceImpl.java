@@ -38,11 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto addUser(NewUserRequest userDto) {
-        try {
-            return UserDto.toDto(userRepository.save(userDto.toEntity()));
-        } catch (Exception e) {
-            throw new DataConflictException(e.getMessage());
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new DataConflictException("Email already exists.");
         }
+        return UserDto.toDto(userRepository.save(userDto.toEntity()));
     }
 
     @Override
