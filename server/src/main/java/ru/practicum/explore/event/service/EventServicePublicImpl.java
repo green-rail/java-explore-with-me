@@ -81,24 +81,7 @@ public class EventServicePublicImpl implements EventServicePublic {
         List<EventShortDto> eventDtos = events.getContent().stream()
                 .map(EventShortDto::toDto)
                 .collect(Collectors.toList());
-        var eventsUrls = new String[eventDtos.size()];
-        String eventsBaseUrl = "/events/";
-        for (int i = 0; i < eventDtos.size(); i++) {
-            eventsUrls[i] = eventsBaseUrl + eventDtos.get(i).getId().toString();
-        }
-        var responseEntity = statisticsClient.getStats(start, end, eventsUrls, false);
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
 
-            List<ViewStatsDto> viewStatsList = (List<ViewStatsDto>) responseEntity.getBody();
-            if (viewStatsList != null && viewStatsList.size() == eventDtos.size()) {
-                for (int i = 0; i < viewStatsList.size(); i++) {
-                    eventDtos.get(i).setViews(viewStatsList.get(i).getHits());
-                }
-            }
-        }
-        if (!eventDateSort) {
-            eventDtos.sort(Comparator.comparingLong(EventShortDto::getViews));
-        }
         return eventDtos;
     }
 
