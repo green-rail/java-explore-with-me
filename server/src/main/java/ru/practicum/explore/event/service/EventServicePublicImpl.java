@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explore.client.StatClient;
-import ru.practicum.explore.common.dto.ViewStatsDto;
 import ru.practicum.explore.error.exception.EntityNotFoundException;
 import ru.practicum.explore.error.exception.InvalidRequestException;
 import ru.practicum.explore.event.EventRepository;
@@ -20,7 +19,6 @@ import ru.practicum.explore.request.RequestRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
