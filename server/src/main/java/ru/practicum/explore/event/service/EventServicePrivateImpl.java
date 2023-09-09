@@ -36,6 +36,7 @@ public class EventServicePrivateImpl implements EventServicePrivate {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventShortDto> getUserEvents(long userId, int from, int size) {
         PageRequest page = PageRequest.of(from / size, size);
         var user = userRepository.findById(userId)
@@ -64,6 +65,7 @@ public class EventServicePrivateImpl implements EventServicePrivate {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventFullDto getUserEvent(long userId, long eventId) {
 
         if (!userRepository.existsById(userId)) {
@@ -151,6 +153,7 @@ public class EventServicePrivateImpl implements EventServicePrivate {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getUserEventRequests(long userId, long eventId) {
         var requests = requestRepository.findByEventId(eventId);
         return requests.stream()
