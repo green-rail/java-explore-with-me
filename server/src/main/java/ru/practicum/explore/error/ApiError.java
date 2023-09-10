@@ -20,7 +20,7 @@ public class ApiError {
         this.message = message;
         this.reason = reason;
         this.status = status.name();
-        this.timestamp = Constants.getDefaultFormatter().format(LocalDateTime.now());
+        this.timestamp = Constants.DEFAULT_DATETIME_FORMATTER.format(LocalDateTime.now());
     }
 
 }

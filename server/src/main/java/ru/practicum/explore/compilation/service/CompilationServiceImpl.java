@@ -32,12 +32,11 @@ public class CompilationServiceImpl implements CompilationService {
     public List<CompilationDto> getCompilationsPublic(Boolean pinned, int from, int size) {
 
         PageRequest page = PageRequest.of(from / size, size);
-        List<Compilation> compilations;
-        if (pinned == null) {
-            compilations = compilationRepository.findAll(page).getContent();
-        } else {
-            compilations = compilationRepository.findAllByPinned(pinned, page).getContent();
-        }
+
+        List<Compilation> compilations = pinned == null ?
+                compilationRepository.findAll(page).getContent() :
+                compilationRepository.findAllByPinned(pinned, page).getContent();
+
         return compilations.stream()
                 .map(CompilationDto::toDto)
                 .collect(Collectors.toList());

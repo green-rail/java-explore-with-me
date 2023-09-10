@@ -51,7 +51,7 @@ public class EventServicePrivateImpl implements EventServicePrivate {
         if (eventDto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             throw new InvalidRequestException(
                     "Field: eventDate. Error: должно содержать дату, которая еще не наступила. Value: "
-                            + Constants.getDefaultFormatter().format(eventDto.getEventDate()));
+                            + Constants.DEFAULT_DATETIME_FORMATTER.format(eventDto.getEventDate()));
         }
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
@@ -183,9 +183,8 @@ public class EventServicePrivateImpl implements EventServicePrivate {
                 if (confirmedCount >= r.getEvent().getParticipantLimit()) {
                     r.setStatus(RequestStatus.REJECTED);
                     throw new DataConflictException("Cant accept request.");
-                } else {
-                    r.setStatus(RequestStatus.CONFIRMED);
                 }
+                r.setStatus(RequestStatus.CONFIRMED);
             }
         }
         var saved = requestRepository.saveAll(requests);

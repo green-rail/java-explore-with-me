@@ -75,11 +75,7 @@ public class Event {
     @Column
     private String title;
 
-
     public int getRequestCount() {
-        if (getRequests() == null) {
-            return 0;
-        }
-        return requests.size();
+        return getRequests() == null ? 0 : requests.size();
     }
 }

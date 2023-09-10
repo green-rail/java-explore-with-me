@@ -29,12 +29,14 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                              @Param("end") LocalDateTime end,
                              Pageable page);
 
-    @Query("select e " +
-            "from Event e " +
+    @Query("SELECT e " +
+            "FROM Event e " +
+            "LEFT JOIN Request r ON r.event = e AND r.status = 'CONFIRMED' " +
             "WHERE e.state = :state " +
             "AND (:search IS NULL OR e.annotation LIKE %:search% OR e.description LIKE %:search%) " +
             "AND e.eventDate > :start AND e.eventDate < :end " +
-            "AND ((select count(*) from Request r where r.event = e and r.status = 'CONFIRMED') < e.participantLimit)")
+            "GROUP BY e " +
+            "HAVING COUNT(r) < e.participantLimit")
     Page<Event> findBySearchOnlyAvailable(@Param("state") EventState state,
                                           @Param("search") String search,
                                           @Param("start") LocalDateTime start,
@@ -54,13 +56,15 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                     @Param("end") LocalDateTime end,
                                     Pageable page);
 
-    @Query("select e " +
-           "from Event e " +
-           "WHERE e.state = :state " +
-           "AND (:search IS NULL OR e.annotation LIKE %:search% OR e.description LIKE %:search%) " +
-           "AND e.eventDate > :start AND e.eventDate < :end " +
-           "AND ((select count(*) from Request r where r.event = e and r.status = 'CONFIRMED') < e.participantLimit)" +
-           "AND e.paid = :paid")
+    @Query("SELECT e " +
+            "FROM Event e " +
+            "LEFT JOIN Request r ON r.event = e AND r.status = 'CONFIRMED' " +
+            "WHERE e.state = :state " +
+            "AND (:search IS NULL OR e.annotation LIKE %:search% OR e.description LIKE %:search%) " +
+            "AND e.eventDate > :start AND e.eventDate < :end " +
+            "AND e.paid = :paid " +
+            "GROUP BY e " +
+            "HAVING COUNT(r) < e.participantLimit")
     Page<Event> findBySearchAndPaidOnlyAvailable(@Param("state") EventState state,
                                                  @Param("search") String search,
                                                  @Param("paid") boolean paid,
