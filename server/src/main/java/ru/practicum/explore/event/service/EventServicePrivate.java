@@ -1,5 +1,7 @@
 package ru.practicum.explore.event.service;
 
+import ru.practicum.explore.comment.dto.CommentDto;
+import ru.practicum.explore.comment.dto.NewCommentRequest;
 import ru.practicum.explore.event.dto.*;
 import ru.practicum.explore.request.dto.ParticipationRequestDto;
 
@@ -19,4 +21,10 @@ public interface EventServicePrivate {
 
     EventRequestStatusUpdateResult updateUserEventRequestStatus(long userId, long eventId,
                                                                       EventRequestStatusUpdateRequest updateRequest);
+
+    CommentDto postComment(long userId, long eventId, NewCommentRequest commentRequest);
+
+    CommentDto updateComment(long userId, long eventId, long commentId, NewCommentRequest commentRequest);
+
+    void deleteComment(long userId, long commentId);
 }

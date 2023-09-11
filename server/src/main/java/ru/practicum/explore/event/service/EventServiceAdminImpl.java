@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explore.category.CategoryRepository;
 import ru.practicum.explore.client.StatClient;
+import ru.practicum.explore.comment.CommentRepository;
+import ru.practicum.explore.error.ErrorMessages;
 import ru.practicum.explore.error.exception.DataConflictException;
 import ru.practicum.explore.error.exception.EntityNotFoundException;
 import ru.practicum.explore.error.exception.InvalidRequestException;
@@ -32,6 +34,8 @@ public class EventServiceAdminImpl implements EventServiceAdmin {
     private final StatClient statisticsClient;
     private final CategoryRepository categoryRepository;
     private final RequestRepository requestRepository;
+    private final CommentRepository commentRepository;
+
 
     @Override
     @Transactional(readOnly = true)
@@ -156,5 +160,13 @@ public class EventServiceAdminImpl implements EventServiceAdmin {
             default:
                 throw new IllegalArgumentException("Invalid action: " + action);
         }
+    }
+
+    @Override
+    public void deleteComment(long commentId) {
+        if (!commentRepository.existsById(commentId)) {
+            throw new EntityNotFoundException(ErrorMessages.getCommentNotFoundMessage(commentId));
+        }
+        commentRepository.deleteById(commentId);
     }
 }
