@@ -15,12 +15,9 @@ import ru.practicum.explore.common.dto.EndpointHitDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.google.common.net.UrlEscapers.urlPathSegmentEscaper;
 
 
 @Service
@@ -49,16 +46,13 @@ public final class StatClient {
         var parameters = new HashMap<String, Object>();
         parameters.put("start", formatter.format(start));
         parameters.put("end", formatter.format(end));
-        String path = "/stats?start={start}&end={end}&unique={unique}";
+        StringBuilder path = new StringBuilder("/stats?start={start}&end={end}&unique={unique}");
         if (uris != null && uris.length > 0) {
-            String[] escapedUris = Arrays.stream(uris)
-                    .map(urlPathSegmentEscaper()::escape)
-                    .toArray(String[]::new);
-            path += "&uris={uris}";
-            parameters.put("uris", escapedUris);
+            path.append("&uris={uris}");
+            parameters.put("uris", uris);
         }
         parameters.put("unique", unique);
-        return makeAndSendRequest(HttpMethod.GET, path, parameters, null);
+        return makeAndSendRequest(HttpMethod.GET, path.toString(), parameters, null);
     }
 
     private static boolean isValidStartEnd(LocalDateTime start, LocalDateTime end) {

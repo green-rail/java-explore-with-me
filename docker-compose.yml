@@ -35,6 +35,8 @@ services:
     volumes:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats-db
 

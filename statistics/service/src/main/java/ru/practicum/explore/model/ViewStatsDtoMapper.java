@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class ViewStatsDtoMapper {
 
-
     public static ViewStatsDto toDto(ViewStats stat) {
         return new ViewStatsDto(stat.getApp(), stat.getUri(), stat.getHits());
     }
 
-
     public static List<ViewStatsDto> toDto(Collection<ViewStats> stats) {
-        return stats.stream().map(ViewStatsDtoMapper::toDto).collect(Collectors.toUnmodifiableList());
+        return stats.stream()
+                .map(ViewStatsDtoMapper::toDto)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
