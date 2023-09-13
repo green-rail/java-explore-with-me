@@ -5,6 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explore.category.CategoryRepository;
+import ru.practicum.explore.comment.CommentRepository;
+import ru.practicum.explore.comment.dto.CommentDto;
+import ru.practicum.explore.comment.dto.NewCommentRequest;
 import ru.practicum.explore.common.Constants;
 import ru.practicum.explore.error.ErrorMessages;
 import ru.practicum.explore.error.exception.DataConflictException;
@@ -33,6 +36,7 @@ public class EventServicePrivateImpl implements EventServicePrivate {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final RequestRepository requestRepository;
+    private final CommentRepository commentRepository;
 
 
     @Override
@@ -189,5 +193,50 @@ public class EventServicePrivateImpl implements EventServicePrivate {
         }
         var saved = requestRepository.saveAll(requests);
         return EventRequestStatusUpdateResult.toDto(saved);
+    }
+
+
+    @Override
+    public CommentDto postComment(long userId, long eventId, NewCommentRequest commentRequest) {
+
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        var event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessages.getEventNotFoundMessage(eventId)));
+
+        var comment = commentRequest.toEntity();
+        comment.setAuthor(user);
+        comment.setEvent(event);
+        return CommentDto.toDto(commentRepository.save(comment));
+    }
+
+    @Override
+    public CommentDto updateComment(long userId, long eventId, long commentId, NewCommentRequest commentRequest) {
+
+        var comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessages.getEventNotFoundMessage(commentId)));
+
+        if (comment.getAuthor().getId() != userId) {
+            throw new DataConflictException(
+                    String.format("User id=%d is not the author of the comment id=%d", userId, commentId));
+        }
+
+        comment.setContent(commentRequest.getContent());
+        return CommentDto.toDto(commentRepository.save(comment));
+    }
+
+    @Override
+    public void deleteComment(long userId, long commentId) {
+
+        var comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessages.getEventNotFoundMessage(commentId)));
+
+        if (comment.getAuthor().getId() != userId) {
+            throw new DataConflictException(
+                    String.format("User id=%d is not the author of the comment id=%d", userId, commentId));
+        }
+
+        commentRepository.deleteById(commentId);
     }
 }

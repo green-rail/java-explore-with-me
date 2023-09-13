@@ -13,5 +13,6 @@ public interface EventServiceAdmin {
 
     EventFullDto updateEventAdmin(long eventId, UpdateEventAdminRequest eventUpdateDto);
 
+    void deleteComment(long commentId);
 
 }

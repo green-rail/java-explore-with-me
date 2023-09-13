@@ -1,0 +1,1090 @@
+{
+	"info": {
+		"_postman_id": "020399cf-4ca9-425d-8e7c-de39086a45f2",
+		"name": "feature-comments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27661636"
+	},
+	"item": [
+		{
+			"name": "Add user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function() {\r",
+							"    pm.response.to.have.status(201); \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"}); \r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Пользователь должен содержать поля: id, name, email\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('name');\r",
+							"pm.expect(target).to.have.property('email');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(source.name).equal(target.name, 'Имя пользователя должно соответствовать отправленному в запросе');\r",
+							"    pm.expect(source.email).equal(target.email, 'Почта пользователя должна соответствовать отправленной в запросе');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"user1@mail.ru\",\r\n    \"name\" : \"user1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/admin/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function() {\r",
+							"    pm.response.to.have.status(201); \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Пользователь должен содержать поля: id, name, email\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('name');\r",
+							"pm.expect(target).to.have.property('email');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(source.name).equal(target.name, 'Имя пользователя должно соответствовать отправленному в запросе');\r",
+							"    pm.expect(source.email).equal(target.email, 'Почта пользователя должна соответствовать отправленной в запросе');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"user2@mail.ru\",\r\n    \"name\" : \"user2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/admin/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function() {\r",
+							"    pm.response.to.have.status(201); \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"}); \r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Категория должена содержать поля: id, name\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('name');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(source.name).equal(target.name, 'Имя категории должно соответствовать отправленному в запросе');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"category 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/admin/categories",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add event from user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(201);  \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поля: id, title, annotation, category, paid, eventDate, initiator, description, participantLimit, state, createdOn, location, requestModeration\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('title');\r",
+							"pm.expect(target).to.have.property('annotation');\r",
+							"pm.expect(target).to.have.property('category');\r",
+							"pm.expect(target).to.have.property('paid');\r",
+							"pm.expect(target).to.have.property('eventDate');\r",
+							"pm.expect(target).to.have.property('initiator');\r",
+							"pm.expect(target).to.have.property('description');\r",
+							"pm.expect(target).to.have.property('participantLimit');\r",
+							"pm.expect(target).to.have.property('state');\r",
+							"pm.expect(target).to.have.property('createdOn');\r",
+							"pm.expect(target).to.have.property('location');\r",
+							"pm.expect(target).to.have.property('requestModeration');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(target.title).equal(source.title, 'Название события должно соответствовать названию события в запросе');\r",
+							"    pm.expect(target.annotation).equal(source.annotation, 'Аннотация события должна соответствовать аннотации события в запросе');\r",
+							"    pm.expect(target.paid.toString()).equal(source.paid.toString(), 'Стоимость события должна соответствовать стоимости события в запросе');\r",
+							"    pm.expect(target.eventDate).equal(source.eventDate, 'Дата проведения события должна соответствовать дате проведения события в запросе');\r",
+							"    pm.expect(target.description).equal(source.description, 'Описание события должно соответствовать описание события в запросе');\r",
+							"    pm.expect(target.participantLimit.toString()).equal(source.participantLimit.toString(), 'Лимит участников события должно соответствовать лимиту участников события в запросе');\r",
+							"    pm.expect(target.location.lat.toString()).equal(source.location.lat.toString(), 'Широта локации проведения события должна соответствовать широте локации проведения события в запросе');\r",
+							"    pm.expect(target.location.lon.toString()).equal(source.location.lon.toString(), 'Долгота локации проведения события должна соответствовать долготе локации проведения события в запросе');\r",
+							"    pm.expect(target.requestModeration.toString()).equal(source.requestModeration.toString(), 'Необходимость модерации события должна соответствовать необходимости модерации события в запросе');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"annotation\" : \"Event annotation Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod euismod magna.\",\r\n    \"category\": 1,\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod euismod magna.\",\r\n    \"eventDate\": \"2024-09-11 12:00:00\",\r\n     \"location\": {\r\n        \"lat\": 37.7749,\r\n        \"lon\": -122.4194\r\n    },\r\n    \"paid\": true,\r\n    \"participantLimit\": 0,\r\n    \"requestModeration\": false,\r\n    \"title\": \"Lorem ipsum dolor sit amet.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try add comment with blank content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+							"    pm.response.to.be.badRequest;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"    \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try add comment from non-existing user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "500"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try add comment for non-existing event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add comment from user 1 to event 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Комментарий должен содержать поля: id, eventId, author, postedOn, content\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('eventId');\r",
+							"pm.expect(target).to.have.property('author');\r",
+							"pm.expect(target).to.have.property('postedOn');\r",
+							"pm.expect(target).to.have.property('content');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(target.content).to.be.a(\"string\");\r",
+							"    pm.expect(target.author).to.be.not.null;\r",
+							"    pm.expect(target.postedOn).to.be.not.null;\r",
+							"\r",
+							"    pm.expect(source.content).equal(target.content, 'Текст комментария должен соответствовать указанному при создании');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add comment from user 2 to event 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Комментарий должен содержать поля: id, eventId, author, postedOn, content\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('eventId');\r",
+							"pm.expect(target).to.have.property('author');\r",
+							"pm.expect(target).to.have.property('postedOn');\r",
+							"pm.expect(target).to.have.property('content');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(target.content).to.be.a(\"string\");\r",
+							"    pm.expect(target.author).to.be.not.null;\r",
+							"    pm.expect(target.postedOn).to.be.not.null;\r",
+							"\r",
+							"    pm.expect(source.content).equal(target.content, 'Текст комментария должен соответствовать указанному при создании');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get event with comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(200);  \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поле comments\", function () {\r",
+							"pm.expect(target).to.have.property('comments');\r",
+							"const comment = target.comments[0];\r",
+							"pm.expect(comment).to.have.property('id');\r",
+							"pm.expect(comment).to.have.property('eventId');\r",
+							"pm.expect(comment).to.have.property('author');\r",
+							"pm.expect(comment).to.have.property('postedOn');\r",
+							"pm.expect(comment).to.have.property('content');\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать исходным\", function () {\r",
+							"    pm.expect(target.comments).to.not.be.null;\r",
+							"    pm.expect(Array.isArray(target.comments)).to.be.true;\r",
+							"    pm.expect(target.comments.length).to.eql(2);\r",
+							"    const comment = target.comments[0];\r",
+							"    pm.expect(comment.eventId).equal(1, 'Идентификатор события должен соответствовать запросу');\r",
+							"    pm.expect(comment.content).to.be.a(\"string\");\r",
+							"    pm.expect(comment.author).to.be.not.null;\r",
+							"    pm.expect(comment.postedOn).to.be.not.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try edit comment not from author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 409 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment updated content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "commentId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try edit non-existent comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment updated content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "commentId",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+							"    pm.response.to.be.ok;    \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const source = JSON.parse(pm.request.body.raw);\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Комментарий должен содержать поля: id, eventId, author, postedOn, content\", function () {\r",
+							"pm.expect(target).to.have.property('id');\r",
+							"pm.expect(target).to.have.property('eventId');\r",
+							"pm.expect(target).to.have.property('author');\r",
+							"pm.expect(target).to.have.property('postedOn');\r",
+							"pm.expect(target).to.have.property('content');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+							"    pm.expect(target.id).to.not.be.null;\r",
+							"    pm.expect(target.content).to.be.a(\"string\");\r",
+							"    pm.expect(target.author).to.be.not.null;\r",
+							"    pm.expect(target.postedOn).to.be.not.null;\r",
+							"\r",
+							"    pm.expect(source.content).equal(target.content, 'Текст комментария должен соответствовать указанному при создании');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"comment updated content\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "commentId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try delete non-existent comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/admin/events/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"events",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "commentId",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try delete by not author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 409 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "commentId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment by admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/admin/events/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"events",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "commentId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment by author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/:commentId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId",
+						"comments",
+						":commentId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "commentId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get event with comment check delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+							"    pm.response.to.have.status(200);  \r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"const target = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Событие должно содержать поле comments\", function () {\r",
+							"pm.expect(target).to.have.property('comments');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Комментарии должны быть пустым массивом\", function () {\r",
+							"    pm.expect(target.comments).to.not.be.null;\r",
+							"    pm.expect(Array.isArray(target.comments)).to.be.true;\r",
+							"    pm.expect(target.comments.length).to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"events",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

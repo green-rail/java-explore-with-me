@@ -23,4 +23,8 @@ public class ErrorMessages {
 
     public static final String STRING_TOO_SHORT_MESSAGE = "String too short.";
     public static final String STRING_TOO_LONG_MESSAGE = "String too long.";
+
+    public static String getCommentNotFoundMessage(long id) {
+        return String.format("Comment with id=%d was not found", id);
+    }
 }

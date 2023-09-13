@@ -3,6 +3,7 @@ package ru.practicum.explore.event.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.explore.common.Constants;
@@ -51,5 +52,12 @@ public class EventsAdminController {
         return patched;
     }
 
+    @DeleteMapping("/comments/{commentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteComment(@PathVariable @Positive long commentId,
+                              HttpServletRequest request) {
+        log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
+        eventServiceAdmin.deleteComment(commentId);
+    }
 
 }

@@ -9,7 +9,7 @@ import ru.practicum.explore.request.dto.ParticipationRequestDto;
 import ru.practicum.explore.request.service.RequestService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -22,7 +22,7 @@ public class RequestPrivateController {
     private final RequestService requestService;
 
     @GetMapping
-    public List<ParticipationRequestDto> getUserRequests(@PathVariable @PositiveOrZero long userId,
+    public List<ParticipationRequestDto> getUserRequests(@PathVariable @Positive long userId,
                                                          HttpServletRequest request) {
 
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
@@ -31,8 +31,8 @@ public class RequestPrivateController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipationRequestDto addRequest(@PathVariable @PositiveOrZero long userId,
-                                              @RequestParam @PositiveOrZero long eventId,
+    public ParticipationRequestDto addRequest(@PathVariable @Positive long userId,
+                                              @RequestParam @Positive long eventId,
                                               HttpServletRequest request) {
 
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());
@@ -42,8 +42,8 @@ public class RequestPrivateController {
     }
 
     @PatchMapping("/{requestId}/cancel")
-    public ParticipationRequestDto cancelRequest(@PathVariable @PositiveOrZero long userId,
-                                                 @PathVariable @PositiveOrZero long requestId,
+    public ParticipationRequestDto cancelRequest(@PathVariable @Positive long userId,
+                                                 @PathVariable @Positive long requestId,
                                                  HttpServletRequest request) {
 
         log.debug("On URL [{}] used method [{}]", request.getRequestURL(), request.getMethod());

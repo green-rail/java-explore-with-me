@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import ru.practicum.explore.category.Category;
+import ru.practicum.explore.comment.Comment;
 import ru.practicum.explore.request.model.Request;
 import ru.practicum.explore.user.User;
 
@@ -34,6 +35,10 @@ public class Event {
     @ToString.Exclude
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Request> requests;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @Column(name = "created_on")
     @CreationTimestamp

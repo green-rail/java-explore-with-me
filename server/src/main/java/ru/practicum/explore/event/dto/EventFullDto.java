@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.explore.category.dto.CategoryDto;
+import ru.practicum.explore.comment.dto.CommentDto;
 import ru.practicum.explore.common.Constants;
 import ru.practicum.explore.event.model.Event;
 import ru.practicum.explore.event.model.EventState;
@@ -14,6 +15,9 @@ import ru.practicum.explore.user.dto.UserShortDto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -62,6 +66,7 @@ public class EventFullDto {
 
     private Long views;
 
+    private List<CommentDto> comments;
 
     public static EventFullDto toDto(Event event) {
         var dto = new EventFullDto();
@@ -80,6 +85,13 @@ public class EventFullDto {
         dto.setRequestModeration(event.isRequestModeration());
         dto.setState(event.getState());
         dto.setTitle(event.getTitle());
+
+        dto.setComments(event.getComments() == null ?
+                Collections.emptyList() :
+                event.getComments().stream()
+                        .map(CommentDto::toDto)
+                        .collect(Collectors.toList())
+        );
 
         return dto;
     }
